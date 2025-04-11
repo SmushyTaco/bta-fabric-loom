@@ -26,7 +26,7 @@ group = 'net.fabricmc'
 def baseVersion = '1.10'
 
 def ENV = System.getenv()
-if (ENV.BUILD_NUMBER) {
+/*if (ENV.BUILD_NUMBER) {
 	if (ENV.EXPERIMENTAL) {
 		version = baseVersion + '.0-alpha.' + ENV.BUILD_NUMBER
 	} else {
@@ -34,7 +34,8 @@ if (ENV.BUILD_NUMBER) {
 	}
 } else {
 	version = baseVersion + '.local'
-}
+}*/
+version = baseVersion + '.0-bta'
 
 // We must build against the version of Kotlin Gradle ships with.
 def props = new Properties()
@@ -283,7 +284,7 @@ import org.w3c.dom.Element
 import org.w3c.dom.Node
 
 publishing {
-	publications {
+	/*publications {
 		if (!ENV.EXPERIMENTAL) {
 			// Also publish a snapshot so people can use the latest version if they wish
 			snapshot(MavenPublication) { publication ->
@@ -315,15 +316,14 @@ publishing {
 				})
 			}
 		}
-	}
+	}*/
 	repositories {
 		maven {
-			if (ENV.MAVEN_URL) {
-				url ENV.MAVEN_URL
-				credentials {
-					username ENV.MAVEN_USERNAME
-					password ENV.MAVEN_PASSWORD
-				}
+			name = "signalumMaven"
+			url = "https://maven.thesignalumproject.net/infrastructure"
+			credentials(PasswordCredentials)
+			authentication {
+				basic(BasicAuthentication)
 			}
 		}
 	}
